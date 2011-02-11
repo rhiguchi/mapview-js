@@ -1,5 +1,6 @@
 (function($) {
 
+var mapviewClass = 'ui-mapview';
 var mapviewItemClass = 'ui-mapview-item';
 
 $.widget("ui.mapview", {
@@ -9,7 +10,7 @@ $.widget("ui.mapview", {
     
     _create: function() {
         var self = this;
-        this.element.addClass("ui-mapview");
+        this.element.addClass(mapviewClass);
         
         
         
@@ -26,7 +27,7 @@ $.widget("ui.mapview", {
     },
     
     _destroy: function() {
-        this.element.removeClass("ui-mapview");
+        this.element.removeClass(mapviewClass);
     },
     
     model: function(newModel) {
