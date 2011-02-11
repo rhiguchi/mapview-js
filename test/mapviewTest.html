@@ -11,7 +11,9 @@
 var mapview;
 
 function setUp() {
-    mapview = $('#mapview').mapview();
+    mapview = $('<div>', {
+        id: 'mapview',
+    }).mapview();
 }
 
 function tearDown() {
@@ -20,9 +22,47 @@ function tearDown() {
 
 function testCreate() {
     assertTrue(mapview.hasClass('ui-mapview'));
-    mapview.mapview("destroy");
-    assertFalse(mapview.hasClass('ui-mapview'));
 }
+
+function createTestData(count) {
+    var data_list = [];
+    
+    for (var i = 0; i < count; i++) {
+        var id = 'id-' + ('00' + i).substr(-3);
+        var posX = Math.random();
+        var posY = Math.random();
+        data_list.push([
+            id, posX, posY
+        ]);
+    }
+    
+    return data_list;
+}
+
+function testSetModel() {
+    var model = createTestData(100);
+    
+    assertEquals(mapview, mapview.mapview("model", model));
+    
+    var optionModel = mapview.mapview("model");
+    assertEquals(100, optionModel.length);
+    assertEquals(model, optionModel);
+    
+    var optionModel2 = mapview.mapview("option", "model");
+    assertEquals(optionModel, optionModel2);
+    
+    assertEquals(1, mapview.find('#id-001').size());
+    assertEquals(1, mapview.find('#id-002').size());
+    assertEquals(100, mapview.find('.ui-mapview-item').size());
+}
+
+jQuery(function(){
+    var model = createTestData(100);
+    var mapview = $('#mapview').mapview();
+    
+    mapview.mapview("model", model);
+});
+
 	//--></script>
 
 	<title>Map View Test</title>
