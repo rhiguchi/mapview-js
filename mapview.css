@@ -1,0 +1,15 @@
+.ui-mapview {
+	position: relative;
+}
+
+.ui-mapview .ui-mapview-item {
+	position: absolute;
+}
+
+.ui-mapview-item {
+	width: 24px;
+	height: 24px;
+    margin: -12px 0 0 -12px;
+	display: block;
+	border: solid 1px red;
+}
