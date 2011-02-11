@@ -6,6 +6,8 @@ var mapviewItemClass = 'ui-mapview-item';
 $.widget("ui.mapview", {
     options: {
         model: [],
+        hoverClass: 'hover',
+        activeClass: 'active',
     },
     
     _create: function() {
@@ -37,16 +39,16 @@ $.widget("ui.mapview", {
     },
     
     _itemMouseEnter: function (item) {
-        item.addClass('hover');
+        item.addClass(this.options.hoverClass);
     },
     
     _itemMouseLeave: function (item) {
-        item.removeClass('hover');
+        item.removeClass(this.options.hoverClass);
     },
     
     _itemMouseDown: function (item) {
         var self = this;
-        item.addClass('active');
+        item.addClass(this.options.activeClass);
         $(document).one('mouseup', function () {
             self._itemMouseUp(item);
         })
