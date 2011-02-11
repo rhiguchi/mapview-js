@@ -8,6 +8,10 @@ $.widget("ui.mapview", {
         var self = this;
         this.element.addClass("ui-mapview");
     },
+    
+    destroy: function() {
+        this.element.removeClass("ui-mapview");
+    }
 });
 
 })(jQuery);

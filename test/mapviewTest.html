@@ -14,8 +14,14 @@ function setUp() {
     mapview = $('#mapview').mapview();
 }
 
+function tearDown() {
+    mapview.mapview("destroy");
+}
+
 function testCreate() {
     assertTrue(mapview.hasClass('ui-mapview'));
+    mapview.mapview("destroy");
+    assertFalse(mapview.hasClass('ui-mapview'));
 }
 	//--></script>
 
