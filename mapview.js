@@ -10,6 +10,19 @@ $.widget("ui.mapview", {
     _create: function() {
         var self = this;
         this.element.addClass("ui-mapview");
+        
+        
+        
+        this.element.find('.' + mapviewItemClass)
+            .live('mouseenter', function (event) {
+                self._itemMouseEnter($(this));
+            })
+            .live('mouseleave', function (event) {
+                self._itemMouseLeave($(this));
+            })
+            .live('mousedown', function (event) {
+                self._itemMouseDown($(this));
+            });
     },
     
     _destroy: function() {
@@ -20,6 +33,26 @@ $.widget("ui.mapview", {
         if (arguments.length == 0)
             return this.option('model');
         return this.option('model', newModel);
+    },
+    
+    _itemMouseEnter: function (item) {
+        item.addClass('hover');
+    },
+    
+    _itemMouseLeave: function (item) {
+        item.removeClass('hover');
+    },
+    
+    _itemMouseDown: function (item) {
+        var self = this;
+        item.addClass('active');
+        $(document).one('mouseup', function () {
+            self._itemMouseUp(item);
+        })
+    },
+    
+    _itemMouseUp: function (item) {
+        item.removeClass('active');
     },
     
     _updateItems: function() {

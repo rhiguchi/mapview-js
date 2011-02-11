@@ -13,3 +13,11 @@
 	display: block;
 	border: solid 1px red;
 }
+
+.ui-mapview-item.hover {
+	background-color: #f33;
+}
+
+.ui-mapview-item.active {
+	background-color: #a00;
+}
