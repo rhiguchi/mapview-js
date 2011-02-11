@@ -14,8 +14,8 @@ function setUp() {
     mapview = $('#mapview').mapview();
 }
 
-function testMapview() {
-    assertEquals(1, mapview.length);
+function testCreate() {
+    assertTrue(mapview.hasClass('ui-mapview'));
 }
 	//--></script>
 
