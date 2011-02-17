@@ -12,12 +12,22 @@
     margin: -12px 0 0 -12px;
 	display: block;
 	border: solid 1px red;
+	
+	z-index: 1;
 }
 
 .ui-mapview-item.hover {
 	background-color: #f33;
+	
+	z-index: 3;
 }
 
 .ui-mapview-item.active {
 	background-color: #a00;
+}
+
+.ui-mapview-item.selected {
+	background-color: #00a;
+	
+	z-index: 2;
 }

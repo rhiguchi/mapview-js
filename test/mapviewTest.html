@@ -70,6 +70,25 @@ jQuery(function(){
     var model = createTestData(100);
     var mapview = $('#mapview').mapview();
     
+    var clicked = $();
+    mapview.find(".ui-mapview-item").live("click", function (event) {
+        clicked.removeClass('selected');
+        if (clicked.attr("id") != $(this).attr("id"))
+            clicked = $(this).addClass('selected');
+    })
+    .live("mouseenter", function (event) {
+        $(this).addClass('hover');
+    })
+    .live("mouseleave", function (event) {
+        $(this).removeClass('hover');
+    })
+    .live("mousedown", function (event) {
+        var item = $(this);
+        item.addClass('active');
+        $(document).one('mouseup', function (upEvent) {
+            item.removeClass('active');
+        });
+    });
     mapview.mapview("model", model);
 });
 

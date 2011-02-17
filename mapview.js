@@ -6,26 +6,22 @@ var mapviewItemClass = 'ui-mapview-item';
 $.widget("ui.mapview", {
     options: {
         model: [],
-        hoverClass: 'hover',
-        activeClass: 'active',
+        _items: [],
+        mapviewItemBuilder: function (data) {
+            var item = $('<span>', {
+                'id': data[0],
+                'class': mapviewItemClass,
+                'mapview-item-id': data[0],
+                'style': 'left: ' + (data[1] * 100) + '%;'
+                        + ' top:' + (data[2] * 100) + '%;'
+            });
+            return item;
+        }
     },
     
     _create: function() {
-        var self = this;
         this.element.addClass(mapviewClass);
-        
-        
-        
-        this.element.find('.' + mapviewItemClass)
-            .live('mouseenter', function (event) {
-                self._itemMouseEnter($(this));
-            })
-            .live('mouseleave', function (event) {
-                self._itemMouseLeave($(this));
-            })
-            .live('mousedown', function (event) {
-                self._itemMouseDown($(this));
-            });
+        this._updateItems();
     },
     
     _destroy: function() {
@@ -38,49 +34,21 @@ $.widget("ui.mapview", {
         return this.option('model', newModel);
     },
     
-    _itemMouseEnter: function (item) {
-        item.addClass(this.options.hoverClass);
-    },
-    
-    _itemMouseLeave: function (item) {
-        item.removeClass(this.options.hoverClass);
-    },
-    
-    _itemMouseDown: function (item) {
-        var self = this;
-        item.addClass(this.options.activeClass);
-        $(document).one('mouseup', function () {
-            self._itemMouseUp(item);
-        })
-    },
-    
-    _itemMouseUp: function (item) {
-        item.removeClass('active');
-    },
-    
-    _updateItems: function() {
-        var self = this;
-        $.each(this.options.model, function() {
-            var data = this;
-            var dataId = data[0];
-            var dataElm = self.element.find('#' + dataId);
-            
-            if (dataElm.length == 0) {
-                dataElm = self._createItem(dataId)
-                    .appendTo(self.element);
-            }
-            dataElm
-                .addClass(mapviewItemClass)
-                .css({
-                    left: (data[1] * 100) + '%',
-                    top: (data[2] * 100) + '%'
-                });
+    items: function () {
+        return $.map(this.options._items, function(item) {
+            return item;
         });
     },
     
-    _createItem: function(id) {
-        return $('<span>', {
-            'id': id
+    _updateItems: function() {
+        var widget = this.element;
+        var builder = this.options.mapviewItemBuilder;
+        
+        $.each(this.options._items, function() {
+            this.remove();
+        });
+        this.options._items = $.map(this.options.model, function(data) {
+            return builder(data).appendTo(widget);
         });
     },
     
